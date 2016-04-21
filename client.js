@@ -17,6 +17,18 @@ function onImageLoad() {
     ctx.drawImage(image, 0, 0);
 }
 
+function onMouseDown() {
+    console.log("mousedown");
+}
+
+function onMouseUp() {
+    console.log("mouseup");
+}
+
+function onMouseMove() {
+    console.log("mousemove");
+}
+
 //resize canvas to fit window
 canvas.setAttribute('height', window.innerHeight);
 canvas.setAttribute('width', window.innerWidth);
@@ -24,3 +36,6 @@ canvas.setAttribute('width', window.innerWidth);
 //event handler initializations
 document.getElementById('image-upload').addEventListener('change', handleFileSelect, false);
 image.onload = onImageLoad;
+document.body.onmousedown = onMouseDown;
+document.body.onmouseup = onMouseUp;
+document.body.onmousemove = onMouseMove;
