@@ -4,7 +4,7 @@ var image = {};
     image.img = new Image();
     image.width = 300;
     image.height = 300;
-    image.borderWidth = 10;
+    image.borderWidth = 3;
     image.borderColor = 'blue';
     image.nodesInit();
 var title;
@@ -90,8 +90,8 @@ function redraw() {
 
 function redrawImage() {
     //draw size-adjusting border
-    ctx.strokeStyle = image.borderWidth;
-    ctx.lineWidth = image.borderColor;
+    ctx.strokeStyle = image.borderColor;
+    ctx.lineWidth = image.borderWidth;
     ctx.rect(image.x, image.y, image.width, image.height);
     ctx.stroke();
     //draw size-adjusting border nodes
