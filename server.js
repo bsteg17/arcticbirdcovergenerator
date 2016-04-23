@@ -12,6 +12,10 @@ server = http.createServer(function(req, res) {
         js = fs.readFileSync('client.js');
         res.end(js);
     }
+    if (req.url == '/nodes.js') {
+        js = fs.readFileSync('nodes.js');
+        res.end(js);
+    }
 }).listen(PORT);
 
 console.log("server is listening on 8000");
