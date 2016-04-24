@@ -29,7 +29,7 @@ Object.prototype.recalculateNodePositions = function() {
     this.sizeAdjustNodes["topLeft"].y = this.y - this.nodeSize - this.borderWidth;
     //top mid
     this.sizeAdjustNodes["topMid"].x = this.x + ((this.width / 2) - (this.nodeSize / 2));
-    this.sizeAdjustNodes["topMid"].y = this.y + this.nodeSize - this.borderWidth;
+    this.sizeAdjustNodes["topMid"].y = this.y - this.nodeSize - this.borderWidth;
     //top right
     this.sizeAdjustNodes["topRight"].x = this.x + this.width + this.borderWidth;
     this.sizeAdjustNodes["topRight"].y = this.y - this.nodeSize - this.borderWidth;

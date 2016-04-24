@@ -7,6 +7,7 @@ var image = {};
     image.borderWidth = 3;
     image.borderColor = 'blue';
     image.nodesInit();
+var mouse = {};
 var title;
 var author;
 var color;
@@ -19,63 +20,95 @@ ctx.fillRect(10,10,200,200);
 
 function handleFileSelect(evt) {
     image.img.src = URL.createObjectURL(evt.target.files[0]);
-    console.log(image.img.src);
 }
 
 function onImageLoad() {
-    console.log("imageLoaded");
     image.x = 100;
     image.y = 100;
     redraw();
 }
 
-function onMouseDown(e) {
-    mouse = adjustClickPosition(e);
+function onMouseDown() {
     if (mouse.withinImage) {
-        console.log("within");
-        image.drag = true;
-        image.dragMousePositionX = mouse.imageX;
-        image.dragMousePositionY = mouse.imageY;
-    }
-}
-
-function onMouseUp(e) {
-    mouse = adjustClickPosition(e);
-    // console.log("mouseup");
-    // console.log("page_x: "+e.pageX+" page_y: "+e.pageY);
-    console.log("stopped dragging");
-    image.drag = false;
-    if (mouse.withinImage) {
-        image.adjustableSize = true;
-    } else {
-        image.adjustableSize = false;
-    }
-    console.log("adjustableSize = "+image.adjustableSize);
-}
-
-function onMouseMove(e) {
-    mouse = adjustClickPosition(e);
-    // console.log("mousemove");
-    console.log("imageX: "+mouse.imageX+" imageY: "+mouse.imageY);
-    if (image.drag) {
         console.log("dragging");
-        image.x = mouse.canvasX - image.dragMousePositionX;
-        image.y = mouse.canvasY - image.dragMousePositionY;
-        image.recalculateNodePositions();   
+        image.showNodes = true;
+        image.translate = true;
+        image.translateMousePositionX = mouse.imageX;
+        image.translateMousePositionY = mouse.imageY;   
+    }
+    // console.log(mouse.withinNode);
+    if (mouse.withinNode != null) {
+        console.log("resizing");
+        image.resize = true;
     }
     redraw();
 }
 
+function onMouseUp() {
+    // console.log("mouseup");
+    // console.log("page_x: "+e.pageX+" page_y: "+e.pageY);
+    console.log("stopped dragging");
+    image.translate = false;
+    image.resize = false;
+    if (!mouse.withinImage && mouse.withinNode == null) {
+        console.log("mouse not within image and withinnode is null");
+        image.showNodes = false;
+    }
+    redraw();
+    console.log("adjustableSize = "+image.showNodes);
+}
+
+function onMouseMove(e) {
+    adjustClickPosition(e);
+    // console.log("mousemove");
+    if (image.translate) {
+        translateImage(mouse);
+        redraw();
+    }
+    if (image.resize) {
+        resizeImage(mouse);
+        redraw();
+    }
+}
+
 function adjustClickPosition(e) {
-    mouse = {};
     mouse.canvasX = e.pageX - canvas.x; //canvas.x/y represents the position of canvas itself on page
     mouse.canvasY = e.pageY - canvas.y; //
     mouse.imageX = mouse.canvasX - image.x;//represents position of cursor relative to position of cover image
     mouse.imageY = mouse.canvasY - image.y;
-    cursorWithinImageRangeX = (mouse.imageX > 0) && (mouse.imageX < image.width);
-    cursorWithinImageRangeY = (mouse.imageY > 0) && (mouse.imageY < image.height);
-    mouse.withinImage = cursorWithinImageRangeX && cursorWithinImageRangeY;
-    return mouse;
+    mouse.withinImage = mouseIsWithinImage();
+    mouse.withinNode = getSelectedNode();
+}
+
+function mouseIsWithinImage() {
+    mouseWithinImageRangeX = (mouse.imageX > 0) && (mouse.imageX < image.width);
+    mouseWithinImageRangeY = (mouse.imageY > 0) && (mouse.imageY < image.height);
+    return mouseWithinImageRangeX && mouseWithinImageRangeY;
+}
+
+function getSelectedNode() {
+    if (mouse.withinImage) { console.log("withinimage");return null; }
+    var node; 
+    sizeAdjustNodeNames.forEach(function(nodeName) {
+        nodeToCheck = image.sizeAdjustNodes[nodeName];
+        mouseWithinNodeRangeX = mouse.canvasX > nodeToCheck.x && mouse.canvasX < (nodeToCheck.x + image.nodeSize);
+        mouseWithinNodeRangeY = mouse.canvasY > nodeToCheck.y && mouse.canvasY < (nodeToCheck.y + image.nodeSize);
+        if (mouseWithinNodeRangeX && mouseWithinNodeRangeY) {
+             node = nodeToCheck;
+        }
+    });
+    if (node) {
+        return node;
+    }
+    return null;
+}
+
+function translateImage() {
+    image.x = mouse.canvasX - image.translateMousePositionX;
+    image.y = mouse.canvasY - image.translateMousePositionY;   
+}
+
+function resizeImage() {
 }
 
 function storeCanvasPosition() {
@@ -90,13 +123,16 @@ function redraw() {
 
 function redrawImage() {
     //draw size-adjusting border
-    ctx.strokeStyle = image.borderColor;
-    ctx.lineWidth = image.borderWidth;
-    ctx.rect(image.x, image.y, image.width, image.height);
-    ctx.stroke();
-    //draw size-adjusting border nodes
-    image.drawNodes(ctx);
-    ctx.stroke();
+    if (image.showNodes) {
+        ctx.strokeStyle = image.borderColor;
+        ctx.lineWidth = image.borderWidth;
+        ctx.rect(image.x, image.y, image.width, image.height);
+        ctx.stroke();
+        //draw size-adjusting border nodes
+        image.recalculateNodePositions();
+        image.drawNodes(ctx);
+        ctx.stroke();
+    }
     //draw image
     ctx.drawImage(image.img, image.x, image.y, image.width, image.height);
 }
@@ -116,6 +152,8 @@ canvas.setAttribute('width', window.innerWidth);
 storeCanvasPosition();
 document.getElementById('image-upload').addEventListener('change', handleFileSelect, false);
 image.img.onload = onImageLoad;
+
+//mouse listeners
 canvas.addEventListener("mousedown", onMouseDown, false);
 canvas.addEventListener("mouseup", onMouseUp, false);
 canvas.addEventListener("mousemove", onMouseMove, false);
