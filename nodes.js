@@ -3,7 +3,7 @@ sizeAdjustNodeNames = ["topLeft","topMid","topRight","midRight","bottomRight","b
 Object.prototype.nodesInit = function() {
     image = this;
     image.nodeSize = image.borderWidth;
-    image.nodeOutlineWidth = 3;
+    image.nodeOutlineWidth = 1;
     image.nodeOutlineColor = "black";
     image.nodeFillColor = "white";
     //initialize nodes for this size adjustment

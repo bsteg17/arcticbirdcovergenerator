@@ -47,7 +47,7 @@ function onMouseDown() {
 function onMouseUp() {
     // console.log("mouseup");
     // console.log("page_x: "+e.pageX+" page_y: "+e.pageY);
-    console.log("stopped dragging");
+    console.log("stopped dragging/resizing");
     image.translate = false;
     image.resize = false;
     if (!mouse.withinImage && mouse.withinNode == null) {
@@ -66,7 +66,8 @@ function onMouseMove(e) {
         redraw();
     }
     if (image.resize) {
-        resizeImage(mouse);
+        console.log("resizing");
+        resizeImage();
         redraw();
     }
 }
@@ -76,8 +77,10 @@ function adjustClickPosition(e) {
     mouse.canvasY = e.pageY - canvas.y; //
     mouse.imageX = mouse.canvasX - image.x;//represents position of cursor relative to position of cover image
     mouse.imageY = mouse.canvasY - image.y;
-    mouse.withinImage = mouseIsWithinImage();
-    mouse.withinNode = getSelectedNode();
+    if (!image.translate && !image.resize) {
+        mouse.withinImage = mouseIsWithinImage();
+        mouse.withinNode = getSelectedNode();   
+    }
 }
 
 function mouseIsWithinImage() {
@@ -88,17 +91,17 @@ function mouseIsWithinImage() {
 
 function getSelectedNode() {
     if (mouse.withinImage) { console.log("withinimage");return null; }
-    var node; 
+    var nodeNameReturn; 
     sizeAdjustNodeNames.forEach(function(nodeName) {
         nodeToCheck = image.sizeAdjustNodes[nodeName];
         mouseWithinNodeRangeX = mouse.canvasX > nodeToCheck.x && mouse.canvasX < (nodeToCheck.x + image.nodeSize);
         mouseWithinNodeRangeY = mouse.canvasY > nodeToCheck.y && mouse.canvasY < (nodeToCheck.y + image.nodeSize);
         if (mouseWithinNodeRangeX && mouseWithinNodeRangeY) {
-             node = nodeToCheck;
+             nodeNameReturn = nodeName;
         }
     });
-    if (node) {
-        return node;
+    if (nodeNameReturn) {
+        return nodeNameReturn;
     }
     return null;
 }
@@ -109,6 +112,75 @@ function translateImage() {
 }
 
 function resizeImage() {
+    console.log(mouse.withinNode);
+    switch (mouse.withinNode) {
+        case "topLeft":
+            resizeAnchorBottomRight();
+            break;
+        case "topMid":
+            resizeAnchorBottomAndWidth();
+            break;
+        case "topRight":
+            resizeAnchorBottomLeft();
+            break;
+        case "midRight":
+            resizeAnchorLeftAndHeight();
+            break;
+        case "bottomRight":
+            resizeAnchorTopLeft();
+            break;
+        case "bottomMid":
+            resizeAnchorTopAndWidth();
+            break;
+        case "bottomLeft":
+            resizeAnchorTopRight();
+            break;
+        case "midLeft":
+            resizeAnchorRightAndHeight();
+            break;
+    }
+}
+
+function resizeAnchorBottomRight() {
+    image.width = image.width - mouse.imageX;
+    image.height = image.height - mouse.imageY;
+    image.x = mouse.canvasX;
+    image.y = mouse.canvasY;
+}
+
+function resizeAnchorBottomAndWidth() {
+    image.height = image.height - mouse.imageY;
+    image.y = mouse.canvasY;
+}
+
+function resizeAnchorBottomLeft() {
+    image.width = mouse.imageX;
+    image.height = image.height - mouse.imageY;
+    image.y = mouse.canvasY;
+}
+
+function resizeAnchorLeftAndHeight() {
+    image.width = mouse.imageX;
+}
+
+function resizeAnchorTopLeft() {
+    image.width = mouse.imageX;
+    image.height = mouse.imageY;
+}
+
+function resizeAnchorTopAndWidth() {
+    image.height = mouse.imageY;
+}
+
+function resizeAnchorTopRight() {
+    image.width = image.width - mouse.imageX;
+    image.height = mouse.imageY;
+    image.x = mouse.canvasX;
+}
+
+function resizeAnchorRightAndHeight() {
+    image.width = image.width - mouse.imageX;
+    image.x = mouse.canvasX;
 }
 
 function storeCanvasPosition() {
