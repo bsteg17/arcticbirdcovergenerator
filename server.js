@@ -1,21 +1,18 @@
 var http = require('http');
 var fs = require('fs');
+express = require('express');
+
+app = new express();
 
 var PORT = 8000;
 
-server = http.createServer(function(req, res) {
-    if (req.url == '/') {
-        homepage = fs.readFileSync("index.html");
-        res.end(homepage);
-    }
-    if (req.url == '/client.js') {
-        js = fs.readFileSync('client.js');
-        res.end(js);
-    }
-    if (req.url == '/nodes.js') {
-        js = fs.readFileSync('nodes.js');
-        res.end(js);
-    }
-}).listen(PORT);
+app.use(express.static('public'));
+
+app.get('/', function(req, res) {
+    homepage = fs.readFileSync("index.html");
+    res.end(homepage);
+});
+
+app.listen(PORT);
 
 console.log("server is listening on 8000");
