@@ -1,22 +1,39 @@
 //initialize values for cover image
 
-var mouse = {};
+var mouse;
 var title;
 var author;
 var color;
-var canvas = document.getElementById('canvas');
-var ctx = canvas.getContext('2d');
-ctx.canvas.width = document.getElementById('canvas-contain').clientWidth;
-ctx.canvas.height = document.getElementById('canvas-contain').clientHeight;
+var canvas;
+var ctx;
+var image;
+var cover;
 
-var image = {};
+function initMouse() {
+    mouse = {};
+}
+
+function initCanvas() {
+    canvas = document.getElementById('canvas');
+    ctx = canvas.getContext('2d');
+    ctx.canvas.width = document.getElementById('canvas-contain').clientWidth;
+    ctx.canvas.height = document.getElementById('canvas-contain').clientHeight;
+    storeCanvasPosition();
+}
+
+function initImage() {
+    image = {};
     image.img = new Image();
     image.width = 300;
     image.height = 300;
     image.borderThickness = 6;
     image.borderColor = "black";
     image.nodesInit();
-var cover = {};
+    image.img.onload = onImageLoad;
+}
+
+function initCover() {
+    cover = {};
     cover.img = new Image();
     cover.img.src = "/penguin_classics_black_bottom.png";
     cover.transparent = false;
@@ -26,6 +43,18 @@ var cover = {};
     cover.width = cover.img.width * (cover.height / cover.img.height);
     cover.x = (canvas.width / 2) - (cover.width / 2);
     cover.y = cover.borderThickness;
+    cover.img.onload = onCoverLoad;
+}
+
+function initHandlers() {
+    //event handler initializations
+    document.getElementById('image-upload').addEventListener('change', handleFileSelect, false);
+
+    //mouse listeners
+    canvas.addEventListener("mousedown", onMouseDown, false);
+    canvas.addEventListener("mouseup", onMouseUp, false);
+    canvas.addEventListener("mousemove", onMouseMove, false);
+}
 
 function handleFileSelect(evt) {
     image.img.src = URL.createObjectURL(evt.target.files[0]);
@@ -38,6 +67,7 @@ function onImageLoad() {
 }
 
 function onCoverLoad() {
+    console.log("loaded");
     redraw();
 }
 
@@ -46,7 +76,7 @@ function onMouseDown() {
         image.showNodes = true;
         image.translate = true;
         image.translateMousePositionX = mouse.imageX;
-        image.translateMousePositionY = mouse.imageY;   
+        image.translateMousePositionY = mouse.imageY;
     }
     if (mouse.withinNode != null) {
         image.resize = true;
@@ -82,7 +112,7 @@ function adjustClickPosition(e) {
     mouse.imageY = mouse.canvasY - image.y;
     if (!image.translate && !image.resize) {
         mouse.withinImage = mouseIsWithinImage();
-        mouse.withinNode = getSelectedNode();   
+        mouse.withinNode = getSelectedNode();
     }
 }
 
@@ -94,7 +124,7 @@ function mouseIsWithinImage() {
 
 function getSelectedNode() {
     if (mouse.withinImage) { return null; }
-    var nodeNameReturn; 
+    var nodeNameReturn;
     sizeAdjustNodeNames.forEach(function(nodeName) {
         nodeToCheck = image.sizeAdjustNodes[nodeName];
         mouseWithinNodeRangeX = mouse.canvasX > nodeToCheck.x && mouse.canvasX < (nodeToCheck.x + image.nodeSize);
@@ -111,7 +141,7 @@ function getSelectedNode() {
 
 function translateImage() {
     image.x = mouse.canvasX - image.translateMousePositionX;
-    image.y = mouse.canvasY - image.translateMousePositionY;   
+    image.y = mouse.canvasY - image.translateMousePositionY;
 }
 
 function resizeImage() {
@@ -207,7 +237,7 @@ function drawCover() {
     //     x: 'center',
     //     y: 120,
     //     width: 300,
-    //     placeholder:title; 
+    //     placeholder:title;
     // } );
 }
 
@@ -218,18 +248,15 @@ function clear(context, canvas) {
   canvas.width = w;
 }
 
-//resize canvas to fit window
-canvas.setAttribute('height', window.innerHeight);
-canvas.setAttribute('width', window.innerWidth);
+function init() {
+    initMouse();
+    initCanvas();
+    initImage();
+    initCover();
+    initHandlers();
+}
 
-//event handler initializations
-storeCanvasPosition();
-document.getElementById('image-upload').addEventListener('change', handleFileSelect, false);
-image.img.onload = onImageLoad;
-
-//mouse listeners
-canvas.addEventListener("mousedown", onMouseDown, false);
-canvas.addEventListener("mouseup", onMouseUp, false);
-canvas.addEventListener("mousemove", onMouseMove, false);
-
-cover.img.onload = onCoverLoad;
+//doc init
+$(window).on('load', function() {
+  init();
+});
