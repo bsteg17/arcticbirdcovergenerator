@@ -1,5 +1,3 @@
-//initialize values for cover image
-
 var mouse;
 var title;
 var author;
@@ -44,6 +42,29 @@ function initCover() {
     cover.x = (canvas.width / 2) - (cover.width / 2);
     cover.y = cover.borderThickness;
     cover.img.onload = onCoverLoad;
+}
+
+function initTitle() {
+  title = new CanvasInput({
+    canvas:canvas,
+    x:100,
+    y:100,
+    fontSize: 18,
+    fontFamily: 'Arial',
+    fontColor: '#FF6833',
+    fontWeight: 'bold',
+    width: ,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 3,
+    boxShadow: '1px 1px 0px #fff',
+    innerShadow: '0px 0px 5px rgba(0, 0, 0, 0.5)'
+  });
+}
+
+function initAuthor() {
+
 }
 
 function initHandlers() {
@@ -253,6 +274,8 @@ function init() {
     initCanvas();
     initImage();
     initCover();
+    initTitle();
+    initAuthor();
     initHandlers();
 }
 
