@@ -119,7 +119,7 @@
         self.blur();
       }
     }, true);
-    
+
     // create the hidden input element
     self._hiddenInput = document.createElement('input');
     self._hiddenInput.type = 'text';

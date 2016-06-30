@@ -53,7 +53,7 @@ function initTitle() {
     fontFamily: 'Arial',
     fontColor: '#FF6833',
     fontWeight: 'bold',
-    width: ,
+    width: 50,
     padding: 8,
     borderWidth: 1,
     borderColor: '#000',
