@@ -1,95 +1,278 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'canvas-input' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'requirejs' ]
 2 info using npm@3.8.5
 3 info using node@v0.10.25
 4 verbose node symlink /usr/bin/node
 5 silly loadCurrentTree Starting
 6 silly install loadCurrentTree
 7 silly install readLocalPackageData
-8 silly fetchPackageMetaData canvas-input
-9 silly fetchNamedPackageData canvas-input
-10 silly mapToRegistry name canvas-input
+8 silly fetchPackageMetaData requirejs
+9 silly fetchNamedPackageData requirejs
+10 silly mapToRegistry name requirejs
 11 silly mapToRegistry using default registry
 12 silly mapToRegistry registry https://registry.npmjs.org/
-13 silly mapToRegistry data { raw: 'canvas-input',
+13 silly mapToRegistry data { raw: 'requirejs',
 13 silly mapToRegistry   scope: null,
-13 silly mapToRegistry   name: 'canvas-input',
+13 silly mapToRegistry   name: 'requirejs',
 13 silly mapToRegistry   rawSpec: '',
 13 silly mapToRegistry   spec: 'latest',
 13 silly mapToRegistry   type: 'tag' }
-14 silly mapToRegistry uri https://registry.npmjs.org/canvas-input
-15 verbose request uri https://registry.npmjs.org/canvas-input
+14 silly mapToRegistry uri https://registry.npmjs.org/requirejs
+15 verbose request uri https://registry.npmjs.org/requirejs
 16 verbose request no auth needed
-17 info attempt registry request try #1 at 19:10:37
+17 info attempt registry request try #1 at 19:24:02
 18 verbose request using bearer token for auth
-19 verbose request id 11a0d435b878156a
-20 http request GET https://registry.npmjs.org/canvas-input
-21 http 404 https://registry.npmjs.org/canvas-input
-22 verbose headers { 'content-type': 'application/json',
-22 verbose headers   'cache-control': 'max-age=0',
-22 verbose headers   'content-length': '2',
+19 verbose request id dc48b12b1b10db68
+20 http request GET https://registry.npmjs.org/requirejs
+21 http 200 https://registry.npmjs.org/requirejs
+22 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+22 verbose headers   etag: '"2VIRFJZKFOXBKFGUOAUCLGBHX"',
+22 verbose headers   'content-type': 'application/json',
+22 verbose headers   'content-encoding': 'gzip',
+22 verbose headers   'cache-control': 'max-age=300',
+22 verbose headers   'transfer-encoding': 'chunked',
 22 verbose headers   'accept-ranges': 'bytes',
-22 verbose headers   date: 'Fri, 10 Jun 2016 00:10:50 GMT',
+22 verbose headers   date: 'Tue, 14 Jun 2016 00:24:08 GMT',
 22 verbose headers   via: '1.1 varnish',
 22 verbose headers   connection: 'keep-alive',
-22 verbose headers   'x-served-by': 'cache-ord1733-ORD',
+22 verbose headers   'x-served-by': 'cache-ord1748-ORD',
 22 verbose headers   'x-cache': 'MISS',
 22 verbose headers   'x-cache-hits': '0',
-22 verbose headers   'x-timer': 'S1465517450.503519,VS0,VE134',
+22 verbose headers   'x-timer': 'S1465863848.810498,VS0,VE45',
 22 verbose headers   vary: 'Accept-Encoding' }
-23 silly get cb [ 404,
-23 silly get   { 'content-type': 'application/json',
-23 silly get     'cache-control': 'max-age=0',
-23 silly get     'content-length': '2',
+23 silly get cb [ 200,
+23 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+23 silly get     etag: '"2VIRFJZKFOXBKFGUOAUCLGBHX"',
+23 silly get     'content-type': 'application/json',
+23 silly get     'content-encoding': 'gzip',
+23 silly get     'cache-control': 'max-age=300',
+23 silly get     'transfer-encoding': 'chunked',
 23 silly get     'accept-ranges': 'bytes',
-23 silly get     date: 'Fri, 10 Jun 2016 00:10:50 GMT',
+23 silly get     date: 'Tue, 14 Jun 2016 00:24:08 GMT',
 23 silly get     via: '1.1 varnish',
 23 silly get     connection: 'keep-alive',
-23 silly get     'x-served-by': 'cache-ord1733-ORD',
+23 silly get     'x-served-by': 'cache-ord1748-ORD',
 23 silly get     'x-cache': 'MISS',
 23 silly get     'x-cache-hits': '0',
-23 silly get     'x-timer': 'S1465517450.503519,VS0,VE134',
+23 silly get     'x-timer': 'S1465863848.810498,VS0,VE45',
 23 silly get     vary: 'Accept-Encoding' } ]
-24 silly fetchPackageMetaData Error: Registry returned 404 for GET on https://registry.npmjs.org/canvas-input
-24 silly fetchPackageMetaData     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
-24 silly fetchPackageMetaData     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:242:14)
-24 silly fetchPackageMetaData     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
-24 silly fetchPackageMetaData     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:199:22)
-24 silly fetchPackageMetaData     at Request.EventEmitter.emit (events.js:98:17)
-24 silly fetchPackageMetaData     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1036:10)
-24 silly fetchPackageMetaData     at Request.EventEmitter.emit (events.js:117:20)
-24 silly fetchPackageMetaData     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:963:12)
-24 silly fetchPackageMetaData     at IncomingMessage.EventEmitter.emit (events.js:117:20)
-24 silly fetchPackageMetaData     at _stream_readable.js:920:16
-24 silly fetchPackageMetaData  error for canvas-input { [Error: Registry returned 404 for GET on https://registry.npmjs.org/canvas-input] pkgid: 'canvas-input', statusCode: 404, code: 'E404' }
-25 silly rollbackFailedOptional Starting
-26 silly rollbackFailedOptional Finishing
-27 silly runTopLevelLifecycles Starting
-28 silly runTopLevelLifecycles Finishing
-29 silly install printInstalled
-30 verbose stack Error: Registry returned 404 for GET on https://registry.npmjs.org/canvas-input
-30 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
-30 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:242:14)
-30 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
-30 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:199:22)
-30 verbose stack     at Request.EventEmitter.emit (events.js:98:17)
-30 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1036:10)
-30 verbose stack     at Request.EventEmitter.emit (events.js:117:20)
-30 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:963:12)
-30 verbose stack     at IncomingMessage.EventEmitter.emit (events.js:117:20)
-30 verbose stack     at _stream_readable.js:920:16
-31 verbose statusCode 404
-32 verbose pkgid canvas-input
-33 verbose cwd /home/benstegeman/Code/penguin
-34 error Linux 3.19.0-58-generic
-35 error argv "node" "/usr/local/bin/npm" "install" "canvas-input"
-36 error node v0.10.25
-37 error npm  v3.8.5
-38 error code E404
-39 error 404 Registry returned 404 for GET on https://registry.npmjs.org/canvas-input
-40 error 404
-41 error 404 'canvas-input' is not in the npm registry.
-42 error 404 You should bug the author to publish it (or use the name yourself!)
-43 error 404 Note that you can also install from a
-44 error 404 tarball, folder, http url, or git url.
-45 verbose exit [ 1, true ]
+24 verbose get saving requirejs to /home/benstegeman/.npm/registry.npmjs.org/requirejs/.cache.json
+25 verbose correctMkdir /home/benstegeman/.npm correctMkdir not in flight; initializing
+26 silly install normalizeTree
+27 silly loadCurrentTree Finishing
+28 silly loadIdealTree Starting
+29 silly install loadIdealTree
+30 silly cloneCurrentTree Starting
+31 silly install cloneCurrentTreeToIdealTree
+32 silly cloneCurrentTree Finishing
+33 silly loadShrinkwrap Starting
+34 silly install loadShrinkwrap
+35 silly loadShrinkwrap Finishing
+36 silly loadAllDepsIntoIdealTree Starting
+37 silly install loadAllDepsIntoIdealTree
+38 silly resolveWithNewModule requirejs@2.2.0 checking installable status
+39 silly cache add args [ 'requirejs', null ]
+40 verbose cache add spec requirejs
+41 silly cache add parsed spec { raw: 'requirejs',
+41 silly cache add   scope: null,
+41 silly cache add   name: 'requirejs',
+41 silly cache add   rawSpec: '',
+41 silly cache add   spec: 'latest',
+41 silly cache add   type: 'tag' }
+42 silly addNamed requirejs@latest
+43 verbose addNamed "latest" is being treated as a dist-tag for requirejs
+44 info addNameTag [ 'requirejs', 'latest' ]
+45 silly mapToRegistry name requirejs
+46 silly mapToRegistry using default registry
+47 silly mapToRegistry registry https://registry.npmjs.org/
+48 silly mapToRegistry data { raw: 'requirejs',
+48 silly mapToRegistry   scope: null,
+48 silly mapToRegistry   name: 'requirejs',
+48 silly mapToRegistry   rawSpec: '',
+48 silly mapToRegistry   spec: 'latest',
+48 silly mapToRegistry   type: 'tag' }
+49 silly mapToRegistry uri https://registry.npmjs.org/requirejs
+50 verbose addNameTag registry:https://registry.npmjs.org/requirejs not in flight; fetching
+51 verbose get https://registry.npmjs.org/requirejs not expired, no request
+52 silly addNameTag next cb for requirejs with tag latest
+53 silly addNamed requirejs@2.2.0
+54 verbose addNamed "2.2.0" is a plain semver version for requirejs
+55 silly mapToRegistry name requirejs
+56 silly mapToRegistry using default registry
+57 silly mapToRegistry registry https://registry.npmjs.org/
+58 silly mapToRegistry data { raw: 'requirejs',
+58 silly mapToRegistry   scope: null,
+58 silly mapToRegistry   name: 'requirejs',
+58 silly mapToRegistry   rawSpec: '',
+58 silly mapToRegistry   spec: 'latest',
+58 silly mapToRegistry   type: 'tag' }
+59 silly mapToRegistry uri https://registry.npmjs.org/requirejs
+60 verbose addRemoteTarball https://registry.npmjs.org/requirejs/-/requirejs-2.2.0.tgz not in flight; adding
+61 verbose addRemoteTarball [ 'https://registry.npmjs.org/requirejs/-/requirejs-2.2.0.tgz',
+61 verbose addRemoteTarball   '0f2b1538af2b8d0a4fffffde5d367aa9cd4cfe84' ]
+62 info retry fetch attempt 1 at 19:24:03
+63 info attempt registry request try #1 at 19:24:03
+64 http fetch GET https://registry.npmjs.org/requirejs/-/requirejs-2.2.0.tgz
+65 verbose request using bearer token for auth
+66 http fetch 200 https://registry.npmjs.org/requirejs/-/requirejs-2.2.0.tgz
+67 silly fetchAndShaCheck shasum 0f2b1538af2b8d0a4fffffde5d367aa9cd4cfe84
+68 verbose addTmpTarball /tmp/npm-3251-ed2630b1/registry.npmjs.org/requirejs/-/requirejs-2.2.0.tgz not in flight; adding
+69 verbose addTmpTarball already have metadata; skipping unpack for requirejs@2.2.0
+70 verbose correctMkdir /home/benstegeman/.npm correctMkdir not in flight; initializing
+71 silly cache afterAdd requirejs@2.2.0
+72 verbose afterAdd /home/benstegeman/.npm/requirejs/2.2.0/package/package.json not in flight; writing
+73 verbose correctMkdir /home/benstegeman/.npm correctMkdir not in flight; initializing
+74 verbose afterAdd /home/benstegeman/.npm/requirejs/2.2.0/package/package.json written
+75 silly loadAllDepsIntoIdealTree Finishing
+76 silly idealTree:prePrune penguin
+76 silly idealTree:prePrune ├── CanvasInput
+76 silly idealTree:prePrune ├── accepts@1.2.13
+76 silly idealTree:prePrune ├── array-flatten@1.1.1
+76 silly idealTree:prePrune ├── content-disposition@0.5.1
+76 silly idealTree:prePrune ├── content-type@1.0.1
+76 silly idealTree:prePrune ├── cookie-signature@1.0.6
+76 silly idealTree:prePrune ├── cookie@0.1.5
+76 silly idealTree:prePrune ├── debug@2.2.0
+76 silly idealTree:prePrune ├── depd@1.1.0
+76 silly idealTree:prePrune ├── destroy@1.0.4
+76 silly idealTree:prePrune ├── ee-first@1.1.1
+76 silly idealTree:prePrune ├── escape-html@1.0.3
+76 silly idealTree:prePrune ├── etag@1.7.0
+76 silly idealTree:prePrune ├── express@4.13.4
+76 silly idealTree:prePrune ├── finalhandler@0.4.1
+76 silly idealTree:prePrune ├── forwarded@0.1.0
+76 silly idealTree:prePrune ├── fresh@0.3.0
+76 silly idealTree:prePrune ├── http-errors@1.3.1
+76 silly idealTree:prePrune ├── inherits@2.0.1
+76 silly idealTree:prePrune ├── ipaddr.js@1.0.5
+76 silly idealTree:prePrune ├── media-typer@0.3.0
+76 silly idealTree:prePrune ├── merge-descriptors@1.0.1
+76 silly idealTree:prePrune ├── methods@1.1.2
+76 silly idealTree:prePrune ├── mime-db@1.22.0
+76 silly idealTree:prePrune ├── mime-types@2.1.10
+76 silly idealTree:prePrune ├── mime@1.3.4
+76 silly idealTree:prePrune ├── ms@0.7.1
+76 silly idealTree:prePrune ├── negotiator@0.5.3
+76 silly idealTree:prePrune ├── on-finished@2.3.0
+76 silly idealTree:prePrune ├── parseurl@1.3.1
+76 silly idealTree:prePrune ├── path-to-regexp@0.1.7
+76 silly idealTree:prePrune ├── proxy-addr@1.0.10
+76 silly idealTree:prePrune ├── qs@4.0.0
+76 silly idealTree:prePrune ├── range-parser@1.0.3
+76 silly idealTree:prePrune ├── requirejs@2.2.0
+76 silly idealTree:prePrune ├── send@0.13.1
+76 silly idealTree:prePrune ├── serve-static@1.10.2
+76 silly idealTree:prePrune ├── statuses@1.2.1
+76 silly idealTree:prePrune ├── type-is@1.6.12
+76 silly idealTree:prePrune ├── unpipe@1.0.0
+76 silly idealTree:prePrune ├── utils-merge@1.0.0
+76 silly idealTree:prePrune └── vary@1.0.1
+77 silly loadIdealTree Finishing
+78 silly currentTree penguin
+78 silly currentTree ├── CanvasInput
+78 silly currentTree ├── accepts@1.2.13
+78 silly currentTree ├── array-flatten@1.1.1
+78 silly currentTree ├── content-disposition@0.5.1
+78 silly currentTree ├── content-type@1.0.1
+78 silly currentTree ├── cookie-signature@1.0.6
+78 silly currentTree ├── cookie@0.1.5
+78 silly currentTree ├── debug@2.2.0
+78 silly currentTree ├── depd@1.1.0
+78 silly currentTree ├── destroy@1.0.4
+78 silly currentTree ├── ee-first@1.1.1
+78 silly currentTree ├── escape-html@1.0.3
+78 silly currentTree ├── etag@1.7.0
+78 silly currentTree ├── express@4.13.4
+78 silly currentTree ├── finalhandler@0.4.1
+78 silly currentTree ├── forwarded@0.1.0
+78 silly currentTree ├── fresh@0.3.0
+78 silly currentTree ├── http-errors@1.3.1
+78 silly currentTree ├── inherits@2.0.1
+78 silly currentTree ├── ipaddr.js@1.0.5
+78 silly currentTree ├── media-typer@0.3.0
+78 silly currentTree ├── merge-descriptors@1.0.1
+78 silly currentTree ├── methods@1.1.2
+78 silly currentTree ├── mime-db@1.22.0
+78 silly currentTree ├── mime-types@2.1.10
+78 silly currentTree ├── mime@1.3.4
+78 silly currentTree ├── ms@0.7.1
+78 silly currentTree ├── negotiator@0.5.3
+78 silly currentTree ├── on-finished@2.3.0
+78 silly currentTree ├── parseurl@1.3.1
+78 silly currentTree ├── path-to-regexp@0.1.7
+78 silly currentTree ├── proxy-addr@1.0.10
+78 silly currentTree ├── qs@4.0.0
+78 silly currentTree ├── range-parser@1.0.3
+78 silly currentTree ├── send@0.13.1
+78 silly currentTree ├── serve-static@1.10.2
+78 silly currentTree ├── statuses@1.2.1
+78 silly currentTree ├── type-is@1.6.12
+78 silly currentTree ├── unpipe@1.0.0
+78 silly currentTree ├── utils-merge@1.0.0
+78 silly currentTree └── vary@1.0.1
+79 silly idealTree penguin
+79 silly idealTree ├── CanvasInput
+79 silly idealTree ├── accepts@1.2.13
+79 silly idealTree ├── array-flatten@1.1.1
+79 silly idealTree ├── content-disposition@0.5.1
+79 silly idealTree ├── content-type@1.0.1
+79 silly idealTree ├── cookie-signature@1.0.6
+79 silly idealTree ├── cookie@0.1.5
+79 silly idealTree ├── debug@2.2.0
+79 silly idealTree ├── depd@1.1.0
+79 silly idealTree ├── destroy@1.0.4
+79 silly idealTree ├── ee-first@1.1.1
+79 silly idealTree ├── escape-html@1.0.3
+79 silly idealTree ├── etag@1.7.0
+79 silly idealTree ├── express@4.13.4
+79 silly idealTree ├── finalhandler@0.4.1
+79 silly idealTree ├── forwarded@0.1.0
+79 silly idealTree ├── fresh@0.3.0
+79 silly idealTree ├── http-errors@1.3.1
+79 silly idealTree ├── inherits@2.0.1
+79 silly idealTree ├── ipaddr.js@1.0.5
+79 silly idealTree ├── media-typer@0.3.0
+79 silly idealTree ├── merge-descriptors@1.0.1
+79 silly idealTree ├── methods@1.1.2
+79 silly idealTree ├── mime-db@1.22.0
+79 silly idealTree ├── mime-types@2.1.10
+79 silly idealTree ├── mime@1.3.4
+79 silly idealTree ├── ms@0.7.1
+79 silly idealTree ├── negotiator@0.5.3
+79 silly idealTree ├── on-finished@2.3.0
+79 silly idealTree ├── parseurl@1.3.1
+79 silly idealTree ├── path-to-regexp@0.1.7
+79 silly idealTree ├── proxy-addr@1.0.10
+79 silly idealTree ├── qs@4.0.0
+79 silly idealTree ├── range-parser@1.0.3
+79 silly idealTree ├── requirejs@2.2.0
+79 silly idealTree ├── send@0.13.1
+79 silly idealTree ├── serve-static@1.10.2
+79 silly idealTree ├── statuses@1.2.1
+79 silly idealTree ├── type-is@1.6.12
+79 silly idealTree ├── unpipe@1.0.0
+79 silly idealTree ├── utils-merge@1.0.0
+79 silly idealTree └── vary@1.0.1
+80 silly generateActionsToTake Starting
+81 silly install generateActionsToTake
+82 silly rollbackFailedOptional Starting
+83 silly rollbackFailedOptional Finishing
+84 silly runTopLevelLifecycles Starting
+85 silly runTopLevelLifecycles Finishing
+86 silly install printInstalled
+87 warn enoent ENOENT, open '/home/benstegeman/Code/penguin/package.json'
+88 verbose stack Error: /home/benstegeman/Code/penguin/node_modules/CanvasInput: Appears to be a git repo or submodule.
+88 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/npm-install-checks/index.js:137:15
+88 verbose stack     at Object.oncomplete (fs.js:107:15)
+89 verbose cwd /home/benstegeman/Code/penguin
+90 error Linux 3.19.0-58-generic
+91 error argv "node" "/usr/local/bin/npm" "install" "requirejs"
+92 error node v0.10.25
+93 error npm  v3.8.5
+94 error path /home/benstegeman/Code/penguin/node_modules/CanvasInput
+95 error code EISGIT
+96 error git /home/benstegeman/Code/penguin/node_modules/CanvasInput: Appears to be a git repo or submodule.
+97 error git /home/benstegeman/Code/penguin/node_modules/CanvasInput
+98 error git Refusing to remove it. Update manually,
+98 error git or move it out of the way first.
+99 verbose exit [ 1, true ]

@@ -1,3 +1,5 @@
+
+
 var mouse;
 var title;
 var author;
@@ -45,22 +47,20 @@ function initCover() {
 }
 
 function initTitle() {
-  title = new CanvasInput({
-    canvas:canvas,
-    x:100,
-    y:100,
-    fontSize: 18,
-    fontFamily: 'Arial',
-    fontColor: '#FF6833',
-    fontWeight: 'bold',
-    width: ,
-    padding: 8,
-    borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 3,
-    boxShadow: '1px 1px 0px #fff',
-    innerShadow: '0px 0px 5px rgba(0, 0, 0, 0.5)'
-  });
+  title = {};
+  title.element = document.createElement("input");
+  title.width = canvas.width * .2
+  title.x = canvas.x + ( (canvas.width * .5) - (title.width * .5) );
+  title.y = canvas.y + (canvas.height * .8);
+  // title.element.style = "position:absolute;left:"+title.x+";top:"+title.y+";width:"+title.width+";z-index:10;";
+  title.element.style = "position:absolute;left:"+title.x+"px;top:"+title.y+"px;width:"+title.width+";z-index:10;";
+  title.element.style.border = "0";
+  title.element.style.outline = "none";
+  title.element.style.backgroundColor = "#011422";
+  title.element.style.color = "#ff6833";
+  title.element.style.textAlign = "center";
+  title.element.style.fontSize = "20px";
+  document.getElementById("canvas-contain").appendChild(title.element);
 }
 
 function initAuthor() {
@@ -277,6 +277,7 @@ function init() {
     initTitle();
     initAuthor();
     initHandlers();
+    console.log(title);
 }
 
 //doc init
