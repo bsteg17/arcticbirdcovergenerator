@@ -52,7 +52,6 @@ function initTitle() {
   title.width = canvas.width * .2
   title.x = canvas.x + ( (canvas.width * .5) - (title.width * .5) );
   title.y = canvas.y + (canvas.height * .8);
-  // title.element.style = "position:absolute;left:"+title.x+";top:"+title.y+";width:"+title.width+";z-index:10;";
   title.element.style = "position:absolute;left:"+title.x+"px;top:"+title.y+"px;width:"+title.width+";z-index:10;";
   title.element.style.border = "0";
   title.element.style.outline = "none";
@@ -60,6 +59,7 @@ function initTitle() {
   title.element.style.color = "#ff6833";
   title.element.style.textAlign = "center";
   title.element.style.fontSize = "20px";
+  title.element.value = "INFINITE JEST";
   document.getElementById("canvas-contain").appendChild(title.element);
 }
 
