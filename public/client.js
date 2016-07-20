@@ -78,7 +78,6 @@ function initAuthor() {
   author.element.style.color = "#ffffff";
   author.element.style.textAlign = "center";
   author.element.style.fontSize = "17px";
-  author.element.style.fontFamily = "17px";
   author.element.style.fontStyle = "italic";
   author.element.style.fontFamily = "Georgia";
   author.element.value = "David Foster Wallace";
@@ -88,6 +87,7 @@ function initAuthor() {
 function initHandlers() {
     //event handler initializations
     document.getElementById('image-upload').addEventListener('change', handleFileSelect, false);
+    document.getElementById('save-image').addEventListener('click', saveImage, false);
 
     //mouse listeners
     canvas.addEventListener("mousedown", onMouseDown, false);
@@ -97,6 +97,33 @@ function initHandlers() {
 
 function handleFileSelect(evt) {
     image.img.src = URL.createObjectURL(evt.target.files[0]);
+}
+
+function saveImage() {
+  imgData = ctx.getImageData(cover.x, cover.y, cover.width, cover.height);
+
+  imageCanvas = document.createElement("canvas");
+  imageCanvas.id = "image-canvas";
+  imageCanvas.style.display = "none";
+  imageCanvas.width = cover.width;
+  imageCanvas.height = cover.height;
+
+  imageCtx = imageCanvas.getContext('2d');
+  imageCtx.putImageData(imgData, 0, 0);
+
+  titleStyle = title.element.style;
+  authorStyle = author.element.style;
+  imageCtx.textAlign = "center";
+  imageCtx.font = titleStyle.fontWeight+" "+titleStyle.fontSize+" "+titleStyle.fontFamily;
+  imageCtx.fillStyle = titleStyle.color;
+  imageCtx.fillText(title.element.value, title.x - cover.x, title.y - cover.y);
+  imageCtx.font = authorStyle.fontStyle+" "+authorStyle.fontSize+" "+authorStyle.fontFamily;//+" "+authorStyle.textAlign+" "+authorStyle.color;
+  imageCtx.fillStyle = authorStyle.color;
+  imageCtx.fillText(author.element.value, author.x - cover.x, author.y - cover.y);
+
+  imgDataURL = imageCanvas.toDataURL("image/png");
+  window.open(imgDataURL, "_blank");
+  // console.log(document.getElementById('save-image').href);
 }
 
 function onImageLoad() {
