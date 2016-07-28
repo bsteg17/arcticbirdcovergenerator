@@ -47,7 +47,7 @@ function initCover() {
 function initTitle() {
   title = {};
   title.element = document.createElement("input");
-  title.width = canvas.width * .2
+  title.width = canvas.width * .2;
   title.x = canvas.x + ( (canvas.width * .5) - (title.width * .5) );
   title.y = canvas.y + (canvas.height * .83);
   title.element.style = "position:absolute;left:"+title.x+"px;top:"+title.y+"px;width:"+title.width+";z-index:10;";
@@ -56,7 +56,7 @@ function initTitle() {
   title.element.style.backgroundColor = "#011422";
   title.element.style.color = "#ff6833";
   title.element.style.textAlign = "center";
-  title.element.style.fontSize = "20px";
+  title.element.style.fontSize = cover.height / 32.15+"px";
   title.element.style.fontFamily = "Georgia";
   title.element.style.fontWeight = "bold";
   title.element.value = "INFINITE JEST";
@@ -68,14 +68,14 @@ function initAuthor() {
   author.element = document.createElement("input");
   author.width = canvas.width * .2
   author.x = canvas.x + ( (canvas.width * .5) - (author.width * .5) );
-  author.y = canvas.y + (canvas.height * .905);
+  author.y = canvas.y + (canvas.height * .89);
   author.element.style = "position:absolute;left:"+author.x+"px;top:"+author.y+"px;width:"+author.width+";z-index:10;";
   author.element.style.border = "0";
   author.element.style.outline = "none";
   author.element.style.backgroundColor = "#011422";
   author.element.style.color = "#ffffff";
   author.element.style.textAlign = "center";
-  author.element.style.fontSize = "17px";
+  author.element.style.fontSize = cover.height / 34.82;
   author.element.style.fontStyle = "italic";
   author.element.style.fontFamily = "Georgia";
   author.element.value = "David Foster Wallace";
@@ -83,25 +83,28 @@ function initAuthor() {
 }
 
 function initHandlers() {
-    //event handler initializations
-    document.getElementById('image-upload').addEventListener('change', handleFileSelect, false);
-    document.getElementById('save-image').addEventListener('click', saveImage, false);
-
-    //mouse listeners
-    canvas.addEventListener("mousedown", onMouseDown, false);
-    canvas.addEventListener("mouseup", onMouseUp, false);
-    canvas.addEventListener("mousemove", onMouseMove, false);
+  //event handler initializations
+  document.getElementById('image-upload').addEventListener('change', handleFileSelect, false);
+  document.getElementById('save-image').addEventListener('click', saveImage, false);
+  //mouse listeners
+  canvas.addEventListener("mousedown", onMouseDown, false);
+  canvas.addEventListener("mouseup", onMouseUp, false);
+  canvas.addEventListener("mousemove", onMouseMove, false);
 }
 
 function handleFileSelect(evt) {
-    image.img.src = URL.createObjectURL(evt.target.files[0]);
+  image.img.src = URL.createObjectURL(evt.target.files[0]);
 }
 
 function saveImage() {
+  //temporarily remove nodes
   if (image.showNodes) {
     restoreNodes = true;
     image.showNodes = false;
   }
+  //temporarily remove border
+  oldBorderThickness = cover.borderThickness;
+  cover.borderThickness = 0;
   redraw();
   imgData = ctx.getImageData(cover.x, cover.y, cover.width, cover.height);
 
@@ -127,9 +130,11 @@ function saveImage() {
   imgDataURL = imageCanvas.toDataURL("image/png");
   window.open(imgDataURL, "_blank");
   // console.log(document.getElementById('save-image').href);
+  //restore nodes if they were visible prior to canvas snapshot
   if (restoreNodes) {
     image.showNodes = true;
   }
+  cover.borderThickness = oldBorderThickness;
   redraw();
 }
 
