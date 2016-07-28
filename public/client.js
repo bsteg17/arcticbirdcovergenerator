@@ -1,5 +1,3 @@
-
-
 var mouse;
 var title;
 var author;
@@ -100,6 +98,11 @@ function handleFileSelect(evt) {
 }
 
 function saveImage() {
+  if (image.showNodes) {
+    restoreNodes = true;
+    image.showNodes = false;
+  }
+  redraw();
   imgData = ctx.getImageData(cover.x, cover.y, cover.width, cover.height);
 
   imageCanvas = document.createElement("canvas");
@@ -116,14 +119,18 @@ function saveImage() {
   imageCtx.textAlign = "center";
   imageCtx.font = titleStyle.fontWeight+" "+titleStyle.fontSize+" "+titleStyle.fontFamily;
   imageCtx.fillStyle = titleStyle.color;
-  imageCtx.fillText(title.element.value, title.x - cover.x, title.y - cover.y);
+  imageCtx.fillText(title.element.value, cover.width / 2, title.y - cover.y);
   imageCtx.font = authorStyle.fontStyle+" "+authorStyle.fontSize+" "+authorStyle.fontFamily;//+" "+authorStyle.textAlign+" "+authorStyle.color;
   imageCtx.fillStyle = authorStyle.color;
-  imageCtx.fillText(author.element.value, author.x - cover.x, author.y - cover.y);
+  imageCtx.fillText(author.element.value, cover.width / 2, author.y - cover.y);
 
   imgDataURL = imageCanvas.toDataURL("image/png");
   window.open(imgDataURL, "_blank");
   // console.log(document.getElementById('save-image').href);
+  if (restoreNodes) {
+    image.showNodes = true;
+  }
+  redraw();
 }
 
 function onImageLoad() {
