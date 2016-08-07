@@ -120,7 +120,7 @@ function saveImage() {
   //write title on cover
   imageCtx.font = titleStyle.fontWeight+" "+titleStyle.fontSize+" "+titleStyle.fontFamily;
   imageCtx.fillStyle = titleStyle.color;
-  imageCtx.fillText(title.element.value, cover.width / 2, title.y - cover.y - canvas.y);
+  imageCtx.fillText(title.element.value, cover.width / 2, title.y - (canvas.y / 2));
 
   // console.log("real title")
   // console.log(title.x, title.y)
@@ -134,7 +134,7 @@ function saveImage() {
   //write author on cover
   imageCtx.font = authorStyle.fontStyle+" "+authorStyle.fontSize+" "+authorStyle.fontFamily;//+" "+authorStyle.textAlign+" "+authorStyle.color;
   imageCtx.fillStyle = authorStyle.color;
-  imageCtx.fillText(author.element.value, cover.width / 2, author.y - cover.y - canvas.y);
+  imageCtx.fillText(author.element.value, cover.width / 2, author.y - (canvas.y / 2));
 
   imgDataURL = imageCanvas.toDataURL("image/png");
   window.open(imgDataURL, "_blank");
