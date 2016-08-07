@@ -329,6 +329,6 @@ function init() {
 
 //doc init
 $(window).on('load', function() {
-  //$(this).scrollTop(0); //forces browser to go to top of page on reload
+  $(this).scrollTop(0); //forces browser to go to top of page on reload
   init();
 });
