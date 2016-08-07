@@ -320,7 +320,7 @@ function drawCover() {
     //draw cover border
     ctx.strokeStyle = cover.borderColor;
     ctx.lineWidth = cover.borderThickness;
-    ctx.rect(cover.x - (cover.borderThickness / 2), cover.y, cover.width + cover.borderThickness, cover.height);
+    ctx.rect(cover.x - (cover.borderThickness / 2), cover.y - (cover.borderThickness / 2), cover.width + cover.borderThickness, cover.height);
     ctx.stroke();
     // ct = new CanvasText( canvas, {
     //     x: 'center',
