@@ -64,6 +64,7 @@ function initTitle() {
   title.element.style.fontSize = (cover.height * .031)+"px";
   title.element.style.fontFamily = "Georgia";
   title.element.style.fontWeight = "bold";
+  // title.element.style.textTransform = "uppercase";
   title.element.value = "DAVID FOSTER WALLACE";
   document.getElementById("canvas-contain").appendChild(title.element);
 }
@@ -319,6 +320,24 @@ function clear(context, canvas) {
   canvas.width = w;
 }
 
+function disableZoom() {
+  $(document).keydown(function(event) {
+    if (event.ctrlKey==true && (event.which == '61' || event.which == '107' || event.which == '173' || event.which == '109'  || event.which == '187'  || event.which == '189'  ) ) {
+      event.preventDefault();
+    }
+    // 107 Num Key  +
+    // 109 Num Key  -
+    // 173 Min Key  hyphen/underscor Hey
+    // 61 Plus key  +/= key
+  });
+
+  $(window).bind('mousewheel DOMMouseScroll', function (event) {
+    if (event.ctrlKey == true) {
+      event.preventDefault();
+    }
+  });
+}
+
 function init() {
     initMouse();
     initCanvas();
@@ -330,5 +349,6 @@ function init() {
 //doc init
 $(window).on('load', function() {
   $(this).scrollTop(0); //forces browser to go to top of page on reload
+  disableZoom();
   init();
 });
