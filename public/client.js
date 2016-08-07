@@ -267,12 +267,12 @@ function storeCanvasPosition() {
 
 function redraw() {
     clear(ctx, canvas);
-    if (image.showNodes) {
-        drawBorder();
-        drawBorderNodes();
-    }
     drawImage();
     drawCover();
+    if (image.showNodes) {
+      drawBorder(); 
+      drawBorderNodes();
+    }
 }
 
 function drawBorder() {
@@ -329,5 +329,6 @@ function init() {
 
 //doc init
 $(window).on('load', function() {
+  //$(this).scrollTop(0); //forces browser to go to top of page on reload
   init();
 });
