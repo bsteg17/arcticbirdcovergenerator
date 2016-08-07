@@ -37,26 +37,26 @@ function initCover() {
     cover.transparent = false;
     cover.borderThickness = 6;
     cover.borderColor = "black";
-    cover.height = canvas.height - cover.borderThickness;
+    cover.height = canvas.height - cover.borderThickness * 2;
     cover.width = cover.img.width * (cover.height / cover.img.height);
     cover.x = (canvas.width / 2) - (cover.width / 2);
     cover.y = cover.borderThickness;
-    cover.img.onload = onCoverLoad;
+    cover.img.onload = onCoverLoad; //source of cover load issue?
 }
 
 function initTitle() {
   title = {};
   title.element = document.createElement("input");
-  title.width = canvas.width * .2;
-  title.x = canvas.x + ( (canvas.width * .5) - (title.width * .5) );
-  title.y = canvas.y + (canvas.height * .83);
+  title.width = cover.width;
+  title.x = canvas.x + cover.x;
+  title.y = canvas.y + cover.y + (cover.height * .815);
   title.element.style = "position:absolute;left:"+title.x+"px;top:"+title.y+"px;width:"+title.width+";z-index:10;";
   title.element.style.border = "0";
   title.element.style.outline = "none";
   title.element.style.backgroundColor = "#011422";
   title.element.style.color = "#ff6833";
   title.element.style.textAlign = "center";
-  title.element.style.fontSize = cover.height / 32.15+"px";
+  title.element.style.fontSize = (cover.height * .031)+"px";
   title.element.style.fontFamily = "Georgia";
   title.element.style.fontWeight = "bold";
   title.element.value = "INFINITE JEST";
@@ -66,16 +66,16 @@ function initTitle() {
 function initAuthor() {
   author = {};
   author.element = document.createElement("input");
-  author.width = canvas.width * .2
-  author.x = canvas.x + ( (canvas.width * .5) - (author.width * .5) );
-  author.y = canvas.y + (canvas.height * .89);
+  author.width = cover.width;
+  author.x = canvas.x + cover.x;
+  author.y = canvas.y + cover.y + (cover.height * .875);
   author.element.style = "position:absolute;left:"+author.x+"px;top:"+author.y+"px;width:"+author.width+";z-index:10;";
   author.element.style.border = "0";
   author.element.style.outline = "none";
   author.element.style.backgroundColor = "#011422";
   author.element.style.color = "#ffffff";
   author.element.style.textAlign = "center";
-  author.element.style.fontSize = cover.height / 34.82;
+  author.element.style.fontSize = (cover.height * .031)+"px";
   author.element.style.fontStyle = "italic";
   author.element.style.fontFamily = "Georgia";
   author.element.value = "David Foster Wallace";
@@ -97,14 +97,12 @@ function handleFileSelect(evt) {
 }
 
 function saveImage() {
-  //temporarily remove nodes
-  if (image.showNodes) {
-    restoreNodes = true;
-    image.showNodes = false;
-  }
-  //temporarily remove border
+  //temporarily remove nodes so that they aren't showing in the export image
+  (image.showNodes) ? restoreNodes = true : restoreNodes = false;
+  image.showNodes = false;
+  //temporarily remove border so that it isn't showing in the export image
   oldBorderThickness = cover.borderThickness;
-  cover.borderThickness = 0;
+  cover.borderThickness = 6;
   redraw();
   imgData = ctx.getImageData(cover.x, cover.y, cover.width, cover.height);
 
@@ -120,17 +118,30 @@ function saveImage() {
   titleStyle = title.element.style;
   authorStyle = author.element.style;
   imageCtx.textAlign = "center";
+  
+  //write title on cover
   imageCtx.font = titleStyle.fontWeight+" "+titleStyle.fontSize+" "+titleStyle.fontFamily;
   imageCtx.fillStyle = titleStyle.color;
-  imageCtx.fillText(title.element.value, cover.width / 2, title.y - cover.y);
+  imageCtx.fillText(title.element.value, cover.width / 2, title.y - cover.y - canvas.y);
+
+  // console.log("real title")
+  // console.log(title.x, title.y)
+  // console.log("real author")
+  // console.log(author.x, author.y)
+  // console.log("export title")
+  // console.log(cover.width / 2, title.y - cover.y)
+  // console.log("export author")
+  // console.log(cover.width / 2, author.y - cover.y)s
+
+  //write author on cover
   imageCtx.font = authorStyle.fontStyle+" "+authorStyle.fontSize+" "+authorStyle.fontFamily;//+" "+authorStyle.textAlign+" "+authorStyle.color;
   imageCtx.fillStyle = authorStyle.color;
-  imageCtx.fillText(author.element.value, cover.width / 2, author.y - cover.y);
+  imageCtx.fillText(author.element.value, cover.width / 2, author.y - cover.y - canvas.y);
 
   imgDataURL = imageCanvas.toDataURL("image/png");
   window.open(imgDataURL, "_blank");
   // console.log(document.getElementById('save-image').href);
-  //restore nodes if they were visible prior to canvas snapshot
+  // restore nodes if they were visible prior to canvas snapshot
   if (restoreNodes) {
     image.showNodes = true;
   }
@@ -309,7 +320,7 @@ function drawCover() {
     //draw cover border
     ctx.strokeStyle = cover.borderColor;
     ctx.lineWidth = cover.borderThickness;
-    ctx.rect(cover.x, cover.y, cover.width, cover.height);
+    ctx.rect(cover.x - (cover.borderThickness / 2), cover.y, cover.width + cover.borderThickness, cover.height);
     ctx.stroke();
     // ct = new CanvasText( canvas, {
     //     x: 'center',
