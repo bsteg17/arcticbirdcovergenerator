@@ -101,8 +101,6 @@ function saveImage() {
   (image.showNodes) ? restoreNodes = true : restoreNodes = false;
   image.showNodes = false;
   //temporarily remove border so that it isn't showing in the export image
-  oldBorderThickness = cover.borderThickness;
-  cover.borderThickness = 6;
   redraw();
   imgData = ctx.getImageData(cover.x, cover.y, cover.width, cover.height);
 
@@ -145,7 +143,6 @@ function saveImage() {
   if (restoreNodes) {
     image.showNodes = true;
   }
-  cover.borderThickness = oldBorderThickness;
   redraw();
 }
 
