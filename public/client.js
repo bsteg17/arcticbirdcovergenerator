@@ -64,7 +64,7 @@ function initTitle() {
   title.element.style.fontSize = (cover.height * .031)+"px";
   title.element.style.fontFamily = "Georgia";
   title.element.style.fontWeight = "bold";
-  // title.element.style.textTransform = "uppercase";
+  title.element.style.textTransform = "uppercase";
   title.element.value = "DAVID FOSTER WALLACE";
   document.getElementById("canvas-contain").appendChild(title.element);
 }
