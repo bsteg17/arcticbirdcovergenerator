@@ -64,7 +64,7 @@ function initTitle() {
   title.element.style.fontSize = (cover.height * .031)+"px";
   title.element.style.fontFamily = "Georgia";
   title.element.style.fontWeight = "bold";
-  title.element.value = "INFINITE JEST";
+  title.element.value = "DAVID FOSTER WALLACE";
   document.getElementById("canvas-contain").appendChild(title.element);
 }
 
@@ -83,7 +83,7 @@ function initAuthor() {
   author.element.style.fontSize = (cover.height * .031)+"px";
   author.element.style.fontStyle = "italic";
   author.element.style.fontFamily = "Georgia";
-  author.element.value = "David Foster Wallace";
+  author.element.value = "Infinite Jest";
   document.getElementById("canvas-contain").appendChild(author.element);
 }
 
