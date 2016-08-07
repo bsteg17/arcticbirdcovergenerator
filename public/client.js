@@ -34,14 +34,19 @@ function initCover() {
     cover = {};
     cover.img = new Image();
     cover.img.src = "/penguin_classics_black_bottom.png";
-    cover.transparent = false;
-    cover.borderThickness = 6;
-    cover.borderColor = "black";
-    cover.height = canvas.height - cover.borderThickness * 2;
-    cover.width = cover.img.width * (cover.height / cover.img.height);
-    cover.x = (canvas.width / 2) - (cover.width / 2);
-    cover.y = cover.borderThickness;
-    cover.img.onload = onCoverLoad; //source of cover load issue?
+    cover.img.onload = onCoverLoad;
+    function onCoverLoad() {
+      cover.transparent = false;
+      cover.borderThickness = 6;
+      cover.borderColor = "black";
+      cover.height = canvas.height - cover.borderThickness * 2;
+      cover.width = cover.img.width * (cover.height / cover.img.height);
+      cover.x = (canvas.width / 2) - (cover.width / 2);
+      cover.y = cover.borderThickness;
+      redraw();
+      initTitle();
+      initAuthor();
+    }
 }
 
 function initTitle() {
@@ -122,15 +127,6 @@ function saveImage() {
   imageCtx.fillStyle = titleStyle.color;
   imageCtx.fillText(title.element.value, cover.width / 2, title.y - (canvas.y / 2));
 
-  // console.log("real title")
-  // console.log(title.x, title.y)
-  // console.log("real author")
-  // console.log(author.x, author.y)
-  // console.log("export title")
-  // console.log(cover.width / 2, title.y - cover.y)
-  // console.log("export author")
-  // console.log(cover.width / 2, author.y - cover.y)s
-
   //write author on cover
   imageCtx.font = authorStyle.fontStyle+" "+authorStyle.fontSize+" "+authorStyle.fontFamily;//+" "+authorStyle.textAlign+" "+authorStyle.color;
   imageCtx.fillStyle = authorStyle.color;
@@ -149,11 +145,6 @@ function saveImage() {
 function onImageLoad() {
     image.x = 100;
     image.y = 100;
-    redraw();
-}
-
-function onCoverLoad() {
-    console.log("loaded");
     redraw();
 }
 
@@ -319,12 +310,6 @@ function drawCover() {
     ctx.lineWidth = cover.borderThickness;
     ctx.rect(cover.x - (cover.borderThickness / 2), cover.y - (cover.borderThickness / 2), cover.width + cover.borderThickness, cover.height + cover.borderThickness);
     ctx.stroke();
-    // ct = new CanvasText( canvas, {
-    //     x: 'center',
-    //     y: 120,
-    //     width: 300,
-    //     placeholder:title;
-    // } );
 }
 
 function clear(context, canvas) {
@@ -339,10 +324,7 @@ function init() {
     initCanvas();
     initImage();
     initCover();
-    initTitle();
-    initAuthor();
     initHandlers();
-    console.log(title);
 }
 
 //doc init
