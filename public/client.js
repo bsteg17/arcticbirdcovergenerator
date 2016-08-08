@@ -6,6 +6,7 @@ var canvas;
 var ctx;
 var image;
 var cover;
+var sidebar;
 
 function initMouse() {
     mouse = {};
@@ -86,6 +87,21 @@ function initAuthor() {
   author.element.style.fontFamily = "Georgia";
   author.element.value = "Infinite Jest";
   document.getElementById("canvas-contain").appendChild(author.element);
+}
+
+function initSidebar() {
+  sidebar = {};
+  sidebar.width = canvas.width / 8;
+  sidebar.buttons = [new Button("Upload Image", onImageLoad), new Button("Save Image", saveImage)];
+  function Button(label, handler) {
+    this.label = label;
+    this.handler = handler;
+    this.textAlign = "center";
+    this.fontWeight = "2";
+    this.fontSize = "5";
+    this.fontFamily = "Times New Roman";
+    this.textColor = "Black";
+  }
 }
 
 function initHandlers() {
@@ -270,6 +286,7 @@ function redraw() {
     clear(ctx, canvas);
     drawImage();
     drawCover();
+    drawSidebar();
     if (image.showNodes) {
       drawBorder(); 
       drawBorderNodes();
@@ -313,6 +330,37 @@ function drawCover() {
     ctx.stroke();
 }
 
+function drawSidebar() {
+  drawVerticalBorder();
+  drawButtons();
+}
+
+function drawVerticalBorder() {
+  //draw right border (left border is left edge of canvas)
+  ctx.moveTo(sidebar.width, 0);
+  ctx.lineTo(sidebar.width, canvas.height);
+  ctx.stroke();
+}
+
+function drawButtons() {
+  //draw button boundaries
+  buttonHeight = canvas.height / sidebar.buttons.length;
+  for (i = 1; i <= sidebar.buttons.length; i++) {
+    //draw button seperators
+    ctx.moveTo(0, buttonHeight * i);
+    ctx.lineTo(sidebar.width, buttonHeight * i);
+    ctx.stroke();
+    //button text
+    button = sidebar.buttons[i - 1];
+    // buttonTextY = (height of all buttons above that button)   +                 (half of the button's height)
+    buttonTextY =          (buttonHeight * ( i - 1 ))            +   (( ( buttonHeight * i ) - ( buttonHeight * (i - 1) ) ) / 2);
+    ctx.font = button.fontWeight+" "+button.fontSize+" "+button.fontFamily;
+    ctx.fillStyle = button.textColor;
+    ctx.textAlign = button.textAlign;
+    ctx.fillText(button.label, sidebar.width / 2, buttonTextY);
+  }
+}
+
 function clear(context, canvas) {
   context.clearRect(0, 0, canvas.width, canvas.height);
   var w = canvas.width;
@@ -343,6 +391,7 @@ function init() {
     initCanvas();
     initImage();
     initCover();
+    initSidebar();
     initHandlers();
 }
 
