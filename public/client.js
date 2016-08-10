@@ -100,7 +100,7 @@ function initSidebar() {
     this.label = label;
     this.event = event;
     this.handler = handler;
-    this.element = element;
+    this.element = element.attr("style", "display:none;");
     $("body").append(element);
     this.textAlign = "center";
     this.fontWeight = "2";
