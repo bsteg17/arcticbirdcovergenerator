@@ -92,10 +92,16 @@ function initAuthor() {
 function initSidebar() {
   sidebar = {};
   sidebar.width = canvas.width / 8;
-  sidebar.buttons = [new Button("Upload Image", onImageLoad), new Button("Save Image", saveImage)];
-  function Button(label, handler) {
+  uploadImageElement = $('<input type="file" />');
+  saveImageElement = $('<input type="button" />');
+  sidebar.buttons = [new Button("Upload Image", "change", handleFileSelect, uploadImageElement), 
+                     new Button("Save Image", "click", saveImage, saveImageElement)];
+  function Button(label, event, handler, element) {
     this.label = label;
+    this.event = event;
     this.handler = handler;
+    this.element = element;
+    $("body").append(element);
     this.textAlign = "center";
     this.fontWeight = "2";
     this.fontSize = "5";
@@ -106,8 +112,11 @@ function initSidebar() {
 
 function initHandlers() {
   //event handler initializations
-  document.getElementById('image-upload').addEventListener('change', handleFileSelect, false);
-  document.getElementById('save-image').addEventListener('click', saveImage, false);
+  //sidebar button handlers
+  for (i = 0; i < sidebar.buttons.length; i++) {
+    button = sidebar.buttons[i];
+    button.element.on(button.event, button.handler);
+  }
   //mouse listeners
   canvas.addEventListener("mousedown", onMouseDown, false);
   canvas.addEventListener("mouseup", onMouseUp, false);
@@ -167,13 +176,16 @@ function onImageLoad() {
 
 function onMouseDown() {
     if (mouse.withinImage) {
-        image.showNodes = true;
-        image.translate = true;
-        image.translateMousePositionX = mouse.imageX;
-        image.translateMousePositionY = mouse.imageY;
+      image.showNodes = true;
+      image.translate = true;
+      image.translateMousePositionX = mouse.imageX;
+      image.translateMousePositionY = mouse.imageY;
     }
     if (mouse.withinNode != null) {
-        image.resize = true;
+      image.resize = true;
+    }
+    if (mouse.withinButton != null) {
+      mouse.withinButton.element.trigger("click");
     }
     redraw();
 }
@@ -200,81 +212,88 @@ function onMouseMove(e) {
 }
 
 function adjustClickPosition(e) {
-    mouse.canvasX = e.pageX - canvas.x; //canvas.x/y represents the position of canvas itself on page
-    mouse.canvasY = e.pageY - canvas.y; //
-    mouse.imageX = mouse.canvasX - image.x;//represents position of cursor relative to position of cover image
-    mouse.imageY = mouse.canvasY - image.y;
-    if (!image.translate && !image.resize) {
-        mouse.withinImage = mouseIsWithinImage();
-        mouse.withinNode = getSelectedNode();
-    }
+  mouse.canvasX = e.pageX - canvas.x; //canvas.x/y represents the position of canvas itself on page
+  mouse.canvasY = e.pageY - canvas.y; //
+  mouse.imageX = mouse.canvasX - image.x;//represents position of cursor relative to position of cover image
+  mouse.imageY = mouse.canvasY - image.y;
+  if (!image.translate && !image.resize) {
+    mouse.withinImage = mouseIsWithinImage();
+    mouse.withinNode = getSelectedNode();
+    mouse.withinButton = getSelectedButton();
+  }
 }
 
 function mouseIsWithinImage() {
-    mouseWithinImageRangeX = (mouse.imageX > 0) && (mouse.imageX < image.width);
-    mouseWithinImageRangeY = (mouse.imageY > 0) && (mouse.imageY < image.height);
-    return mouseWithinImageRangeX && mouseWithinImageRangeY;
+  mouseWithinImageRangeX = (mouse.imageX > 0) && (mouse.imageX < image.width);
+  mouseWithinImageRangeY = (mouse.imageY > 0) && (mouse.imageY < image.height);
+  return mouseWithinImageRangeX && mouseWithinImageRangeY;
 }
 
 function getSelectedNode() {
-    if (mouse.withinImage) { return null; }
-    var nodeNameReturn;
-    sizeAdjustNodeNames.forEach(function(nodeName) {
-        nodeToCheck = image.sizeAdjustNodes[nodeName];
-        mouseWithinNodeRangeX = mouse.canvasX > nodeToCheck.x && mouse.canvasX < (nodeToCheck.x + image.nodeSize);
-        mouseWithinNodeRangeY = mouse.canvasY > nodeToCheck.y && mouse.canvasY < (nodeToCheck.y + image.nodeSize);
-        if (mouseWithinNodeRangeX && mouseWithinNodeRangeY) {
-             nodeNameReturn = nodeName;
-        }
-    });
-    if (nodeNameReturn) {
-        return nodeNameReturn;
+  if (mouse.withinImage) { return null; }
+  var nodeNameReturn;
+  sizeAdjustNodeNames.forEach(function(nodeName) {
+    nodeToCheck = image.sizeAdjustNodes[nodeName];
+    mouseWithinNodeRangeX = mouse.canvasX > nodeToCheck.x && mouse.canvasX < (nodeToCheck.x + image.nodeSize);
+    mouseWithinNodeRangeY = mouse.canvasY > nodeToCheck.y && mouse.canvasY < (nodeToCheck.y + image.nodeSize);
+    if (mouseWithinNodeRangeX && mouseWithinNodeRangeY) {
+      nodeNameReturn = nodeName;
     }
-    return null;
+  });
+  if (nodeNameReturn) {
+    return nodeNameReturn;
+  }
+  return null;
+}
+
+function getSelectedButton() {
+  if (mouse.canvasX > sidebar.width) { return null; }
+  selection = Math.floor(mouse.canvasY / (canvas.height / sidebar.buttons.length));
+  return sidebar.buttons[selection];
 }
 
 function translateImage() {
-    image.x = mouse.canvasX - image.translateMousePositionX;
-    image.y = mouse.canvasY - image.translateMousePositionY;
+  image.x = mouse.canvasX - image.translateMousePositionX;
+  image.y = mouse.canvasY - image.translateMousePositionY;
 }
 
 function resizeImage() {
-    switch (mouse.withinNode) {
-        case "topLeft":
-            image.width = image.width - mouse.imageX;
-            image.height = image.height - mouse.imageY;
-            image.x = mouse.canvasX;
-            image.y = mouse.canvasY;
-            break;
-        case "topMid":
-            image.height = image.height - mouse.imageY;
-            image.y = mouse.canvasY;
-            break;
-        case "topRight":
-            image.width = mouse.imageX;
-            image.height = image.height - mouse.imageY;
-            image.y = mouse.canvasY;
-            break;
-        case "midRight":
-            image.width = mouse.imageX;
-            break;
-        case "bottomRight":
-            image.width = mouse.imageX;
-            image.height = mouse.imageY;
-            break;
-        case "bottomMid":
-            image.height = mouse.imageY;
-            break;
-        case "bottomLeft":
-            image.width = image.width - mouse.imageX;
-            image.height = mouse.imageY;
-            image.x = mouse.canvasX;
-            break;
-        case "midLeft":
-            image.width = image.width - mouse.imageX;
-            image.x = mouse.canvasX;
-            break;
-    }
+  switch (mouse.withinNode) {
+    case "topLeft":
+      image.width = image.width - mouse.imageX;
+      image.height = image.height - mouse.imageY;
+      image.x = mouse.canvasX;
+      image.y = mouse.canvasY;
+      break;
+    case "topMid":
+      image.height = image.height - mouse.imageY;
+      image.y = mouse.canvasY;
+      break;
+    case "topRight":
+      image.width = mouse.imageX;
+      image.height = image.height - mouse.imageY;
+      image.y = mouse.canvasY;
+      break;
+    case "midRight":
+      image.width = mouse.imageX;
+      break;
+    case "bottomRight":
+      image.width = mouse.imageX;
+      image.height = mouse.imageY;
+      break;
+    case "bottomMid":
+      image.height = mouse.imageY;
+      break;
+    case "bottomLeft":
+      image.width = image.width - mouse.imageX;
+      image.height = mouse.imageY;
+      image.x = mouse.canvasX;
+      break;
+    case "midLeft":
+      image.width = image.width - mouse.imageX;
+      image.x = mouse.canvasX;
+      break;
+  }
 }
 
 function storeCanvasPosition() {
