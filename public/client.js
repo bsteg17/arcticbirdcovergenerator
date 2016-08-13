@@ -105,6 +105,7 @@ function initSidebar() {
     this.handler = handler;
     this.element = element.attr("style", "display:none;");
     $("body").append(element);
+    this.enabled = true;
     this.textAlign = "center";
     this.fontWeight = "2";
     this.fontSize = "5";
@@ -171,14 +172,18 @@ function saveImage() {
 }
 
 function toggleImagePreview() {  
-  imagePreviewButton = $.grep(sidebar.buttons, function(b){b.handler == toggleImagePreview});
+  imagePreviewButton = $.grep(sidebar.buttons, function(b){return b.handler === toggleImagePreview})[0];
+  otherButtons = $.grep(sidebar.buttons, function(b){return b.handler !== toggleImagePreview});
+  console.log(imagePreviewButton)
   if (image.preview) {
     imagePreviewButton.label = "Image Preview";
-    image.preview = false;
+    otherButtons.map(function(b){b.enabled = true});  //enable other buttons
   } else {
     imagePreviewButton.label = "Exit Image Preview";
-    image.preview = true;
+    otherButtons.map(function(b){b.enabled = false});  //disable other buttons
   }
+  console.log(otherButtons)
+  image.preview = !image.preview;
 }
 
 function onImageLoad() {
@@ -260,8 +265,13 @@ function getSelectedNode() {
 }
 
 function getSelectedButton() {
-  if (mouse.canvasX > sidebar.width) { return null; }
+  if (mouse.canvasX > sidebar.width) { 
+    return null;
+  }
   selection = Math.floor(mouse.canvasY / (canvas.height / sidebar.buttons.length));
+  if (!sidebar.buttons[selection].enabled) {
+    return null;
+  }
   return sidebar.buttons[selection];
 }
 
