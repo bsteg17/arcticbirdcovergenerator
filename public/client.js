@@ -28,6 +28,7 @@ function initImage() {
     image.borderThickness = 6;
     image.borderColor = "black";
     image.nodesInit();
+    image.preview = false;
     image.img.onload = onImageLoad;
 }
 
@@ -94,8 +95,10 @@ function initSidebar() {
   sidebar.width = canvas.width / 8;
   uploadImageElement = $('<input type="file" />');
   saveImageElement = $('<input type="button" />');
+  imagePreviewElement = $('<input type="button" />');
   sidebar.buttons = [new Button("Upload Image", "change", handleFileSelect, uploadImageElement), 
-                     new Button("Save Image", "click", saveImage, saveImageElement)];
+                     new Button("Save Image", "click", saveImage, saveImageElement),
+                     new Button("Image Preview", "click", toggleImagePreview, imagePreviewElement)];
   function Button(label, event, handler, element) {
     this.label = label;
     this.event = event;
@@ -160,12 +163,22 @@ function saveImage() {
 
   imgDataURL = imageCanvas.toDataURL("image/png");
   window.open(imgDataURL, "_blank");
-  // console.log(document.getElementById('save-image').href);
   // restore nodes if they were visible prior to canvas snapshot
   if (restoreNodes) {
     image.showNodes = true;
   }
   redraw();
+}
+
+function toggleImagePreview() {  
+  imagePreviewButton = $.grep(sidebar.buttons, function(b){b.handler == toggleImagePreview});
+  if (image.preview) {
+    imagePreviewButton.label = "Image Preview";
+    image.preview = false;
+  } else {
+    imagePreviewButton.label = "Exit Image Preview";
+    image.preview = true;
+  }
 }
 
 function onImageLoad() {
@@ -306,6 +319,9 @@ function redraw() {
     drawImage();
     drawCover();
     drawSidebar();
+    if (image.preview) {
+      return;
+    }
     if (image.showNodes) {
       drawBorder(); 
       drawBorderNodes();
@@ -342,6 +358,9 @@ function drawImage() {
 
 function drawCover() {
     ctx.drawImage(cover.img, cover.x, cover.y, cover.width, cover.height);
+    if (image.preview) {
+      return;
+    }
     //draw cover border
     ctx.strokeStyle = cover.borderColor;
     ctx.lineWidth = cover.borderThickness;
@@ -350,8 +369,11 @@ function drawCover() {
 }
 
 function drawSidebar() {
-  drawVerticalBorder();
   drawButtons();
+  if (image.preview) {
+    return;
+  }
+  drawVerticalBorder();
 }
 
 function drawVerticalBorder() {
@@ -365,6 +387,9 @@ function drawButtons() {
   //draw button boundaries
   buttonHeight = canvas.height / sidebar.buttons.length;
   for (i = 1; i <= sidebar.buttons.length; i++) {
+    if (image.preview && sidebar.buttons[i - 1].handler != toggleImagePreview) {
+      continue;
+    }
     //draw button seperators
     ctx.moveTo(0, buttonHeight * i);
     ctx.lineTo(sidebar.width, buttonHeight * i);
