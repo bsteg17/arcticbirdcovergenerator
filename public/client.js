@@ -151,7 +151,7 @@ function saveImage() {
   //write title on cover
   imageCtx.font = titleStyle.fontWeight+" "+titleStyle.fontSize+" "+titleStyle.fontFamily;
   imageCtx.fillStyle = titleStyle.color;
-  imageCtx.fillText(title.element.value, cover.width / 2, title.y - (canvas.y / 2));
+  imageCtx.fillText(title.element.value.toUpperCase(), cover.width / 2, title.y - (canvas.y / 2));
 
   //write author on cover
   imageCtx.font = authorStyle.fontStyle+" "+authorStyle.fontSize+" "+authorStyle.fontFamily;//+" "+authorStyle.textAlign+" "+authorStyle.color;
