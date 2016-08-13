@@ -325,7 +325,7 @@ function storeCanvasPosition() {
 }
 
 function redraw() {
-    clear(ctx, canvas);
+    clear();
     drawImage();
     drawCover();
     drawSidebar();
@@ -415,8 +415,8 @@ function drawButtons() {
   }
 }
 
-function clear(context, canvas) {
-  context.clearRect(0, 0, canvas.width, canvas.height);
+function clear() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   var w = canvas.width;
   canvas.width = 1;
   canvas.width = w;
