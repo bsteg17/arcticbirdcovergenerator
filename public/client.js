@@ -327,6 +327,9 @@ function storeCanvasPosition() {
 function redraw() {
     clear();
     drawImage();
+    if (image.preview) {
+      drawPreviewBackground();
+    }
     drawCover();
     drawSidebar();
     if (image.preview) {
@@ -364,6 +367,23 @@ function recalculateBorderPosition() {
 
 function drawImage() {
     ctx.drawImage(image.img, image.x, image.y, image.width, image.height);
+}
+
+function drawPreviewBackground() {
+  ctx.moveTo(0, 0);
+  ctx.lineTo(canvas.width, 0);
+  ctx.lineTo(canvas.width, canvas.height);
+  ctx.lineTo(0, canvas.height);
+  ctx.closePath();
+
+  ctx.moveTo(cover.x, cover.y);
+  ctx.lineTo(cover.x + cover.width, cover.y);
+  ctx.lineTo(cover.x + cover.width, cover.y + cover.height);
+  ctx.lineTo(cover.x, cover.y + cover.height);
+  ctx.closePath();
+
+  ctx.fillStyle ="#000000";
+  ctx.fill("evenodd");
 }
 
 function drawCover() {
